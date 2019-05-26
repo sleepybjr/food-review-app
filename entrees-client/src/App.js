@@ -5,7 +5,6 @@ import NotFound from "./components/layout/NotFound";
 import Restaurants from "./components/restaurants/RestaurantsNew";
 import EntreesTable from "./components/entrees/EntreesTable";
 import ReviewsTable from "./components/reviews/ReviewsTable";
-// import AddRestaurant from "./components/AddRestaurant";
 import About from "./components/pages/About";
 import Login from "./components/pages/Login";
 import RegisterUser from "./components/pages/RegisterUser";

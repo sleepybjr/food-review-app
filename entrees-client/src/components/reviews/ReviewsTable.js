@@ -1,36 +1,11 @@
 import React, { Component } from "react";
-import { Typography, Table, Rate } from "antd";
+import { Row, Typography } from "antd";
+import ReviewsCard from "./ReviewsCard";
 import axios from "axios";
-import dateFormat from "dateformat";
 
 const { Title, Text } = Typography;
 
-const columns = [
-  {
-    title: "Review",
-    dataIndex: "text",
-    width: "65%"
-  },
-  {
-    title: "Overall Rating",
-    dataIndex: "rating",
-    width: "15%",
-    render: rating => <Rate disabled value={rating} />
-  },
-  {
-    title: "Created By",
-    dataIndex: "createdBy.username",
-    width: "10%"
-  },
-  {
-    title: "Written On",
-    dataIndex: "creationDateTime",
-    width: "10%",
-    render: date => dateFormat(date, "mmm dS, yyyy")
-  }
-];
-
-class ReviewsTable extends Component {
+export class ReviewsTable extends Component {
   state = {
     data: [],
     pagination: {},
@@ -41,23 +16,8 @@ class ReviewsTable extends Component {
     this.fetch();
   }
 
-  handleTableChange = (pagination, filters, sorter) => {
-    const pager = { ...this.state.pagination };
-    pager.current = pagination.current;
-    this.setState({
-      pagination: pager
-    });
-    this.fetch({
-      results: pagination.pageSize,
-      page: pagination.current,
-      sortField: sorter.field,
-      sortOrder: sorter.order,
-      ...filters
-    });
-  };
-
+  // need to add pagination to the reviewtable
   fetch = (params = {}) => {
-    // console.log("params:", params);
     this.setState({ loading: true });
     axios
       .get(`/api/entrees/${this.props.match.params.id}`, {
@@ -70,33 +30,37 @@ class ReviewsTable extends Component {
         // }
       })
       .then(res => {
+        console.log("here");
         console.log(res);
         const pagination = { ...this.state.pagination };
-        // Read total count from server
-        // pagination.total = data.totalCount;
+
         pagination.total = res.data.totalElements;
         this.setState({
           loading: false,
           data: res.data,
           pagination
         });
-      });
+      })
+      .catch(res => console.log(res));
   };
 
   render() {
+    let reviews = null;
+    if (this.state.data.reviews) {
+      reviews = this.state.data.reviews.map(review => (
+        <ReviewsCard key={review.id} review={review} />
+      ));
+    }
     return (
-      <React.Fragment>
-        <Title level={2}>{this.state.data.name}</Title>
-        <Text>{this.state.data.description}</Text>
-        <Table
-          columns={columns}
-          rowKey={record => record.id}
-          dataSource={this.state.data.reviews}
-          pagination={this.state.pagination}
-          loading={this.state.loading}
-          onChange={this.handleTableChange}
-        />
-      </React.Fragment>
+      <div>
+      <Title level={2}>{this.state.data.name}</Title>
+      <Text>{this.state.data.description}</Text>
+        <div style={{ background: "#ECECEC", padding: "30px" }}>
+          <Row type="flex" gutter={16}>
+            {reviews}
+          </Row>
+        </div>
+      </div>
     );
   }
 }
