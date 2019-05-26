@@ -42,3 +42,11 @@ export function currentUserGet() {
 
   return axios.get("/api/user/me");
 }
+
+export function singleRestaurantGet(id) {
+  return axios.get(`/api/restaurants/${id}`);
+}
+
+export function addReviewPost(entreeId, values) {
+  return axios.post(`/api/entrees/${entreeId}/review`, values);
+}

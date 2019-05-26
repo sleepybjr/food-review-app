@@ -5,6 +5,7 @@ import NotFound from "./components/layout/NotFound";
 import Restaurants from "./components/restaurants/RestaurantsNew";
 import EntreesTable from "./components/entrees/EntreesTable";
 import ReviewsTable from "./components/reviews/ReviewsTable";
+import ReviewsAddForm from "./components/reviews/ReviewsAddForm";
 import About from "./components/pages/About";
 import Login from "./components/pages/Login";
 import RegisterUser from "./components/pages/RegisterUser";
@@ -127,9 +128,13 @@ class App extends Component {
                 path="/restaurants/:id"
                 component={EntreesTable}
               />
-              <Route
+              <Route exact
                 path="/entrees/:id"
                 component={ReviewsTable}
+              />
+              <Route
+                path="/entrees/:id/reviews/create"
+                component={ReviewsAddForm}
               />
               <Route component={NotFound} />
             </Switch>

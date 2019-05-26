@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Typography } from "antd";
+import { Row, Typography, Button } from "antd";
 import ReviewsCard from "./ReviewsCard";
 import axios from "axios";
 
@@ -17,6 +17,8 @@ export class ReviewsTable extends Component {
   }
 
   // need to add pagination to the reviewtable
+  // add sorting
+  // move axios to api file
   fetch = (params = {}) => {
     this.setState({ loading: true });
     axios
@@ -51,10 +53,26 @@ export class ReviewsTable extends Component {
         <ReviewsCard key={review.id} review={review} />
       ));
     }
+    const newUrl = `/entrees/${this.props.match.params.id}/reviews/create`;
     return (
       <div>
-      <Title level={2}>{this.state.data.name}</Title>
-      <Text>{this.state.data.description}</Text>
+        <div style={{ overflow: "hidden" }}>
+          <Title level={2}>{this.state.data.name}</Title>
+          <span style={{ float: "left", paddingTop: "8px" }}>
+            <Text>{this.state.data.description}</Text>
+          </span>
+          <span
+            style={{
+              float: "right",
+              paddingBottom: "10px",
+              paddingRight: "10px"
+            }}
+          >
+            <Button onClick={() => this.props.history.push(newUrl)} type="primary">
+              Write Review
+            </Button>
+          </span>
+        </div>
         <div style={{ background: "#ECECEC", padding: "30px" }}>
           <Row type="flex" gutter={16}>
             {reviews}

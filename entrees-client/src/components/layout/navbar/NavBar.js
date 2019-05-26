@@ -26,7 +26,7 @@ class NavBar extends Component {
     return (
       <nav className="menu">
         <div className="menu__logo">
-          <Link to="">E-Review</Link>
+          <Link to="">Review</Link>
         </div>
         <div className="menu__container">
           <div className="menu_left">

@@ -4,7 +4,7 @@ import javax.validation.constraints.*;
 
 public class ReviewRequest {
     @NotBlank
-    @Size(max = 40)
+    @Size(max = 500)
     private String text;
 
     @Min(1)
