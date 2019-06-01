@@ -8,7 +8,7 @@ const { Meta } = Card;
 class ReviewsCard extends Component {
   render() {
     return (
-      <Col style={{ padding: "8px" }} xs={24} sm={12} md={8}>
+      <Col style={{ padding: "8px" }} xs={24} sm={24} md={8} lg={8}>
         <Card bordered={false}>
           <Meta
             avatar={<Avatar icon="user" />}
